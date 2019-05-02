@@ -1,0 +1,13 @@
+---
+- set_fact:
+    distribution_codename: "{{ ansible_distribution|title }}-{{ ansible_distribution_release|title }}"
+  when: ansible_distribution_release != 'NA'
+
+# ansible_distribution_version is either in format "9.0" or "buster/sid"
+- set_fact:
+    distribution_codename: "{{ ansible_distribution }}-{{ ansible_distribution_version.split('/')[0]|title }}"
+  when: ansible_distribution_release == 'NA' and not ansible_distribution_version is number
+
+- set_fact:
+    distribution_codename: "{{ ansible_distribution }}-{{ ansible_distribution_version.split('.')[0] }}"
+  when: ansible_distribution_release == 'NA' and ansible_distribution_version is number
