@@ -4,17 +4,11 @@
     gather_subset:
       - min
 
-- debug:
-    msg:
-    - "ansible_os_family:            {{ ansible_os_family }}"
-    - "ansible_distribution:         {{ ansible_distribution }}"
-    - "ansible_distribution_release: {{ ansible_distribution_release }}"
-    - "ansible_distribution_version: {{ ansible_distribution_version }}"
+- name: Load variables specific to Debian and its derivatives, e.g. Debian 10 (Buster) or Ubuntu 20.04 LTS (Focal Fossa)
+  include_vars: '{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-- name: Load tasks specific for Debian
-  import_tasks: setup-Debian.yml
-  when: ansible_distribution == 'Debian'
-
-- name: Load tasks specific for Ubuntu
-  import_tasks: setup-Ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+- name: Load tasks specific to OS
+  include_tasks: 'setup-{{ ansible_distribution }}.yml'
+  when: ansible_distribution == 'Debian' or
+        ansible_distribution == 'Ubuntu'
