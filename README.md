@@ -89,12 +89,13 @@ For example:
 
 `defaults/main.yml`:
 ```yml
-image_uri: "{{
+image_uri: |-
+    {{
         {
             'CentOS 8': 'https://...',
             'Ubuntu 20.04': 'https://...'
-        }[' '.join(distribution_id)]
-    }}"
+        }[distribution_id|join(' ')]
+    }}
 ```
 
 ## License
