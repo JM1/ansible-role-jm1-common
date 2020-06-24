@@ -1,7 +1,7 @@
 galaxy_info:
   role_name: common
   author: Jakob Meng
-  description: Common facts and variables
+  description: Provides additional facts e.g. to identify distributions
   company: Hochschule Bonn-Rhein-Sieg
   license: license (GPLv3)
 
@@ -12,6 +12,11 @@ galaxy_info:
   - name: Debian
     versions:
     - buster
+
+  - name: EL
+    versions:
+    - 7
+    - 8
 
   - name: Ubuntu
     versions:

@@ -1,4 +1,0 @@
----
-- name: Set distribution codename fact for Ubuntu releases
-  set_fact:
-    distribution_codename: "{{ ansible_distribution|title }}-{{ ansible_distribution_release|title }}"
