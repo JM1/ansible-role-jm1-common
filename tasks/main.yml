@@ -17,7 +17,7 @@
         distribution_id: |
             {{ [ ansible_facts['distribution'], ansible_facts['distribution_major_version'] ] }}
 
-- name: Set facts for Debian, e.g. Debian 10 (Buster)
+- name: Set facts for Debian, e.g. Debian 10 (Buster) or Debian 11 (Bullseye)
   when: ansible_facts['distribution'] == 'Debian'
   block:
     - name: Set distribution codename fact for known Debian releases
@@ -26,19 +26,21 @@
             {{ [ ansible_facts['distribution'], ansible_facts['distribution_release']|title ] }}
       when: ansible_facts['distribution_release'] != 'NA'
 
-    # ansible_facts['distribution_version'] is either in format "9.0" or "buster/sid"
+    # ansible_facts['distribution_version'] is either in format "9.0" or "buster/sid" or "NA"
 
-    - name: Set distribution codename fact for unknown Debian releases where distribution version fact is not a number
+    - name: Set distribution codename fact for unknown Debian releases where distribution version fact is 'NA' or a number
+      set_fact:
+        distribution_codename: |
+            {{ [ ansible_facts['distribution'], 'NA' ] }}
+      when: ansible_facts['distribution_release'] == 'NA'
+            and (ansible_facts['distribution_version'] == 'NA' or ansible_facts['distribution_version'] is number)
+
+    - name: Set distribution codename fact for unknown Debian releases where distribution version fact is not 'NA' and not a number
       set_fact:
         distribution_codename: |
             {{ [ ansible_facts['distribution'], ansible_facts['distribution_version'].split('/')[0]|title ] }}
-      when: ansible_facts['distribution_release'] == 'NA' and not ansible_facts['distribution_version'] is number
-
-    - name: Set distribution codename fact for unknown Debian releases where distribution version fact is a number
-      set_fact:
-        distribution_codename: |
-            {{ [ ansible_facts['distribution'], ansible_facts['distribution_version'].split('.')[0] ] }}
-      when: ansible_facts['distribution_release'] == 'NA' and ansible_facts['distribution_version'] is number
+      when: ansible_facts['distribution_release'] == 'NA'
+            and (ansible_facts['distribution_version'] != 'NA' and not ansible_facts['distribution_version'] is number)
 
     - name: Set distribution id fact for Debian
       set_fact:
