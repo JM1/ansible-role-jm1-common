@@ -8,6 +8,7 @@ This role defines additional facts, e.g. to identify distributions.
   that uniquely identifies a distribution release. For example:
   - `distribution_id: [ 'CentOS', '8' ]` for `CentOS 8 (Core)`
   - `distribution_id: [ 'Debian', '10' ]` for `Debian 10 (Buster)`
+  - `distribution_id: [ 'Debian', 'Unstable' ]` for `Debian Unstable (Sid)`
   - `distribution_id: [ 'Red Hat Enterprise Linux', '8' ]` for `Red Hat Enterprise Linux (RHEL) 8`
   - `distribution_id: [ 'Ubuntu', '20.04' ]` for `Ubuntu 20.04 LTS (Focal Fossa)`
 
@@ -22,10 +23,17 @@ This role defines additional facts, e.g. to identify distributions.
   and `CentOS 8`. Hence `distribution_codename` is not suitable to distinguish
   between releases, but `distribution_id` is an unique identifier!
 
+  **NOTE:**
+  On Debian Testing, Unstable aka Sid and Experimental, the fact `distribution_id`
+  differs depending on whether `lsb_release` is available or not. If package 
+  [`lsb-release`](https://packages.debian.org/stable/lsb-release) is not installed,
+  then `distribution_id|last` is always `NA` for all distributions in development.
+  If `lsb_release` is available, then `distribution_id|last` is `Testing` for Debian
+  Testing and `Unstable` for Debian Unstable aka Sid and Debian Experimental.
+
 * Variables are assigned using [`set_fact`](https://docs.ansible.com/ansible/latest/modules/set_fact_module.html)!
   Mind [Ansible's variable precedence](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable):
   Variables defined with `set_fact` override variables from most other places such as `host_vars` and `group_vars`.
-
 
 **Tested OS images**
 
@@ -52,6 +60,14 @@ Available on Ansible Galaxy as [jm1.common](https://galaxy.ansible.com/jm1/commo
 
   Role `jm1.common` picks the variable which qualifies best as a change identifier
   and then assigns its value to `distribution_id`.
+
+* On Debian Testing, Unstable aka Sid and Experimental sometimes the fact `distribution_id|last` is `NA` and the other 
+  time it is e.g. `Testing`. Why?
+
+  For Debian branches without a version number, e.g. `VERSION_ID` is not set in `/etc/os-release` on Debian Testing,
+  Ansible returns different values for `ansible_facts['distribution_major_version']` depending on whether the command
+  `lsb_release` is available on the host. If so, then `ansible_facts['distribution_major_version']` resolves to e.g. 
+  `unstable` on Debian Unstable aka Sid. Else `ansible_facts['distribution_major_version']` is always `NA`.
 
 ## Requirements
 
