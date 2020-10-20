@@ -61,7 +61,7 @@
       when: ansible_facts['distribution_major_version'] is not number and
             ansible_facts['distribution_major_version'] != 'NA'
 
-- name: Set facts for Ubuntu, e.g. Ubuntu 20.04 LTS (Focal Fossa)
+- name: Set facts for Ubuntu, e.g. Ubuntu 18.04 LTS (Bionic Beaver) or Ubuntu 20.04 LTS (Focal Fossa)
   when: ansible_facts['distribution'] == 'Ubuntu'
   block:
     - name: Set distribution codename fact for Ubuntu releases
