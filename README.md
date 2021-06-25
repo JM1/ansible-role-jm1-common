@@ -120,7 +120,7 @@ image_uri: |-
 
 GNU General Public License v3.0 or later
 
-See [LICENCE.md](LICENSE.md) to see the full text.
+See [LICENSE.md](LICENSE.md) to see the full text.
 
 ## Author
 
