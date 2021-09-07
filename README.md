@@ -8,6 +8,7 @@ This role defines additional facts, e.g. to identify distributions.
   that uniquely identifies a distribution release. For example:
   - `distribution_id: [ 'CentOS', '8' ]` for `CentOS 8 (Core)`
   - `distribution_id: [ 'Debian', '10' ]` for `Debian 10 (Buster)`
+  - `distribution_id: [ 'Debian', '11' ]` for `Debian 11 (Bullseye)`
   - `distribution_id: [ 'Debian', 'Unstable' ]` for `Debian Unstable (Sid)`
   - `distribution_id: [ 'Red Hat Enterprise Linux', '8' ]` for `Red Hat Enterprise Linux (RHEL) 8`
   - `distribution_id: [ 'Ubuntu', '20.04' ]` for `Ubuntu 20.04 LTS (Focal Fossa)`
@@ -38,7 +39,8 @@ This role defines additional facts, e.g. to identify distributions.
 **Tested OS images**
 - [Cloud images](https://cdimage.debian.org/cdimage/openstack/current/) and
   [Docker images](https://hub.docker.com/_/debian) of `Debian 10 (Buster)` \[`amd64`\]
-- [Docker images](https://hub.docker.com/_/debian) of `Debian 11 (Bullseye)` \[`amd64`\]
+- [Cloud images](https://cdimage.debian.org/images/cloud/bullseye/latest/) and
+  [Docker images](https://hub.docker.com/_/debian) of `Debian 11 (Bullseye)` \[`amd64`\]
 - Generic cloud image of [`CentOS 7 (Core)` \[`amd64`\]](https://cloud.centos.org/centos/7/images/)
 - Generic cloud image of [`CentOS 8 (Core)` \[`amd64`\]](https://cloud.centos.org/centos/8/x86_64/images/)
 - Ubuntu cloud image of [`Ubuntu 18.04 LTS (Bionic Beaver)` \[`amd64`\]](https://cloud-images.ubuntu.com/bionic/current/)
